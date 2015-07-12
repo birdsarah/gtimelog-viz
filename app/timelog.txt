@@ -1,0 +1,1 @@
+/home/bird/.gtimelog/timelog.txt
