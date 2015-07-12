@@ -74,13 +74,11 @@ $performance_font: 'Helvetica', 'Arial', sans-serif !default;
 // Use color primarily for emphasis. Choose colors that fit with
 // your brand and provide good contrast between visual components.
 
-$color-primary: $palette-blue-grey-500 !default;
-$color-primary-dark: $palette-blue-grey-700 !default;
-$color-accent: $palette-pink-A200 !default;
+$color-primary: $palette-grey-900 !default;
+$color-primary-dark: $palette-grey-700 !default;
+$color-accent: $palette-pink-A400 !default;
 
-// Our primary is dark, so use $color-dark-contrast for overlaid text.
 $color-primary-contrast: $color-dark-contrast !default;
-// Our accent is dark, so use $color-dark-contrast for overlaid text.
 $color-accent-contrast: $color-dark-contrast !default;
 
 
@@ -111,10 +109,12 @@ $color-accent-contrast: $color-dark-contrast !default;
 // text-color-secondary. For light themes, use text-color-primary-inverse
 // and text-color-secondary-inverse.
 
-$text-color-primary: unquote("rgba(#{$color-black}, 0.87)") !default;
+$text-color-primary: unquote("rgba(#{$color-white}, 0.87)") !default;
 $text-link-color: unquote("rgb(#{$color-accent})") !default;
 
 /* ==========  Components  ========== */
+$primary: unquote("rgb(#{$color-primary})") !default;
+$primary-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
 
 /* ==========  Standard Buttons  ========== */
 
@@ -181,8 +181,8 @@ $layout-drawer-navigation-link-active-background: unquote("rgb(#{$color-light-co
 $layout-drawer-naviagtion-link-active-color: unquote("rgb(#{$color-primary})") !default;
 
 // Header
-$layout-header-bg-color: unquote("rgb(#{$color-primary})") !default;
-$layout-header-text-color: unquote("rgb(#{$color-primary-contrast})") !default;
+$layout-header-bg-color: unquote("rgb(#{$color-accent})") !default;
+$layout-header-text-color: unquote("rgb(#{$color-accent-contrast})") !default;
 $layout-header-nav-hover-color: unquote("rgba(#{$palette-grey-700}, 0.6)") !default;
 $layout-header-tab-text-color: unquote("rgba(#{$color-primary-contrast}, 0.6)") !default;
 
@@ -192,8 +192,8 @@ $layout-header-tab-highlight: unquote("rgb(#{$color-accent})") !default;
 /* ==========  Content Tabs  ========== */
 
 $tab-highlight-color: unquote("rgb(#{$color-primary})") !default;
-$tab-text-color: unquote("rgba(#{$color-black}, 0.54)") !default;
-$tab-active-text-color: unquote("rgba(#{$color-black}, 0.87)") !default;
+$tab-text-color: unquote("rgba(#{$color-white}, 0.54)") !default;
+$tab-active-text-color: unquote("rgba(#{$color-white}, 0.87)") !default;
 $tab-border-color: unquote("rgb(#{$palette-grey-300})") !default;
 
 /* ==========  Checkboxes  ========== */
@@ -235,11 +235,11 @@ $input-text-error-color: unquote("rgb(222, 50, 38)") !default;
 
 /* ==========  Card  ========== */
 
-$card-background-color: unquote("rgb(#{$color-white})") !default;
-$card-text-color: unquote("rgb(#{$color-black})") !default;
+$card-background-color: unquote("rgb(#{$color-primary})") !default;
+$card-text-color: unquote("rgb(#{$color-white})") !default;
 $card-image-placeholder-color: unquote("rgb(#{$color-accent})") !default;
 $card-supporting-text-text-color: $text-color-primary !default;
-$card-border-color: rgba(0,0,0,0.1) !default;
+$card-border-color: rgba(255,255,255,0.1) !default;
 
 /* ==========  Sliders ========== */
 

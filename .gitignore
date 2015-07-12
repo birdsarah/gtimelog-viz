@@ -1,3 +1,5 @@
+stylesheets
+*.swp
 .ropeproject
 .sass-cache
 .ipynb_checkpoints
