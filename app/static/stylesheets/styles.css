@@ -1,0 +1,68 @@
+/*
+Error: File to import not found or unreadable: mdl/_material-design-lite.
+       Load paths:
+         Compass::SpriteImporter
+         /home/bird/Dev/birdsarah/gtimelog-viz/app/static/sass
+         /var/lib/gems/2.1.0/gems/compass-core-1.0.3/stylesheets
+        on line 8 of /home/bird/Dev/birdsarah/gtimelog-viz/app/static/sass/styles.scss
+
+3: @include font-face("Roboto", font-files("Roboto-BlackItalic.ttf", "Roboto-Black.ttf", "Roboto-BoldItalic.ttf", "Roboto-Bold.ttf", "Roboto-Italic.ttf", "Roboto-LightItalic.ttf", "Roboto-Light.ttf", "Roboto-MediumItalic.ttf", "Roboto-Medium.ttf", "Roboto-Regular.ttf", "Roboto-ThinItalic.ttf", "Roboto-Thin.ttf"));
+4: @include font-face("Roboto Condensed", font-files("RobotoCondensed-BoldItalic.ttf", "RobotoCondensed-Bold.ttf", "RobotoCondensed-Italic.ttf", "RobotoCondensed-LightItalic.ttf", "RobotoCondensed-Light.ttf", "RobotoCondensed-Regular.ttf"));
+5: @include font-face("Material Icons", font-files("MaterialIcons-Regular.ttf"));
+6: 
+7: // Import mdl
+8: @import "mdl/_material-design-lite";
+9: 
+10: // Material design lite icons
+11: .material-icons {
+12:   font-family: 'Material Icons';
+13:   font-weight: normal;
+
+Backtrace:
+/home/bird/Dev/birdsarah/gtimelog-viz/app/static/sass/styles.scss:8
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:67:in `rescue in import'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:45:in `import'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:28:in `imported_file'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:37:in `css_import?'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:311:in `visit_import'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:36:in `visit'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/stack.rb:79:in `block in with_base'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/stack.rb:115:in `with_frame'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/stack.rb:79:in `with_base'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:52:in `map'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:36:in `visit'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/root_node.rb:36:in `css_tree'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/tree/root_node.rb:20:in `render'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/engine.rb:278:in `render'
+/var/lib/gems/2.1.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:17:in `block in render'
+/var/lib/gems/2.1.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:29:in `with_import_scope'
+/var/lib/gems/2.1.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:16:in `render'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/plugin/compiler.rb:209:in `each'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/plugin/compiler.rb:470:in `on_file_changed'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/lib/sass/plugin/compiler.rb:328:in `block in watch'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/vendor/listen/lib/listen/listener.rb:252:in `call'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/vendor/listen/lib/listen/adapter.rb:254:in `call'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/vendor/listen/lib/listen/adapter.rb:254:in `report_changes'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/vendor/listen/lib/listen/adapter.rb:323:in `poll_changed_directories'
+/var/lib/gems/2.1.0/gems/sass-3.4.16/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: mdl/_material-design-lite.\A        Load paths:\A          Compass::SpriteImporter\A          /home/bird/Dev/birdsarah/gtimelog-viz/app/static/sass\A          /var/lib/gems/2.1.0/gems/compass-core-1.0.3/stylesheets\A         on line 8 of /home/bird/Dev/birdsarah/gtimelog-viz/app/static/sass/styles.scss\A \A 3: @include font-face(\"Roboto\", font-files(\"Roboto-BlackItalic.ttf\", \"Roboto-Black.ttf\", \"Roboto-BoldItalic.ttf\", \"Roboto-Bold.ttf\", \"Roboto-Italic.ttf\", \"Roboto-LightItalic.ttf\", \"Roboto-Light.ttf\", \"Roboto-MediumItalic.ttf\", \"Roboto-Medium.ttf\", \"Roboto-Regular.ttf\", \"Roboto-ThinItalic.ttf\", \"Roboto-Thin.ttf\"));\A 4: @include font-face(\"Roboto Condensed\", font-files(\"RobotoCondensed-BoldItalic.ttf\", \"RobotoCondensed-Bold.ttf\", \"RobotoCondensed-Italic.ttf\", \"RobotoCondensed-LightItalic.ttf\", \"RobotoCondensed-Light.ttf\", \"RobotoCondensed-Regular.ttf\"));\A 5: @include font-face(\"Material Icons\", font-files(\"MaterialIcons-Regular.ttf\"));\A 6: \A 7: // Import mdl\A 8: @import \"mdl/_material-design-lite\";\A 9: \A 10: // Material design lite icons\A 11: .material-icons {\A 12:   font-family: 'Material Icons';\A 13:   font-weight: normal;"; }

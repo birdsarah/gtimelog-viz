@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A dashboard for the time logging program - gtimelog">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gTimeLog Dashboard</title>
+
+    <link rel="stylesheet" href="static/stylesheets/styles.css">
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">gTimeLog Dashboard</span>
+          <div class="mdl-layout-spacer"></div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <li class="mdl-menu__item">About</li>
+            <li class="mdl-menu__item">Contact</li>
+            <li class="mdl-menu__item">Legal information</li>
+          </ul>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <div class="mdl-grid">
+        {% block main %}
+        {% endblock main %}
+        </div>
+      </main>
+    </div>
+    <script src="static/javascripts/material.js"></script>
+    {% block js %}
+    {% endblock js %}
+  </body>
+</html>
