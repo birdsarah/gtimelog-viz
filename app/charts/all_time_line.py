@@ -8,6 +8,8 @@ from bokeh.models import (
 )
 from bokeh import palettes
 
+import constants as c
+
 
 def get_plot(raw):
     # Build a dictionary of frames - one for each category
@@ -40,8 +42,8 @@ def get_plot(raw):
     plot = Plot(
         x_range=DataRange1d(),
         y_range=DataRange1d(),
-        background_fill='black',
-        border_fill='black',
+        background_fill=c.COLOR_PRIMARY,
+        border_fill=c.COLOR_PRIMARY,
         outline_line_color=None,
         plot_width=1000,
         plot_height=300
@@ -68,7 +70,10 @@ def get_plot(raw):
     )
 
     axis_properties = dict(
-        major_label_text_color='white',
+        major_label_text_color=c.COLOR_PRIMARY_CONTRAST,
+        axis_line_color=None,
+        major_tick_line_color=None,
+        minor_tick_line_color=None,
     )
     plot.add_layout(LinearAxis(ticker=yticker, **axis_properties), 'left')
     plot.add_layout(DatetimeAxis(formatter=close_ticks, ticker=close_ticker, **axis_properties), 'below')
