@@ -3,7 +3,6 @@ from bokeh.models import (
     Plot, Line, ColumnDataSource, DataRange1d,
     LinearAxis, BasicTicker, DatetimeAxis, DatetimeTicker, DatetimeTickFormatter, Grid
 )
-from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
 from .chart_utils import get_palette
 
 
@@ -42,8 +41,6 @@ def get_plot(raw):
     plot = Plot(
         x_range=DataRange1d(),
         y_range=DataRange1d(),
-        background_fill=COLOR_PRIMARY,
-        border_fill=COLOR_PRIMARY,
         outline_line_color=None,
         plot_width=1200,
         plot_height=300
@@ -70,10 +67,6 @@ def get_plot(raw):
     )
 
     axis_properties = dict(
-        major_label_text_color=COLOR_PRIMARY_CONTRAST,
-        axis_line_color=None,
-        major_tick_line_color=None,
-        minor_tick_line_color=None,
     )
     plot.add_layout(LinearAxis(ticker=yticker, **axis_properties), 'left')
     plot.add_layout(DatetimeAxis(formatter=close_ticks, ticker=close_ticker, **axis_properties), 'below')

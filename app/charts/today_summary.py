@@ -30,54 +30,8 @@ def get_plot(raw):
     data_frame = get_data(raw)
     palette = get_palette(list(data_frame.columns))
     plot = Bar(
-        data_frame, tools='hover', legend=True,
+        data_frame, tools='', legend=True,
         palette=palette,
         width=600, height=600,
     )
-    # Get chart items
-    legend = plot.select({'type': Legend})
-    hover = plot.select({'type': HoverTool})
-    glyphs = plot.select({'type': GlyphRenderer})
-    xaxis = plot.select({'type': CategoricalAxis})
-    yaxis = plot.select({'type': LinearAxis})
-
-    # Format chart properties
-    plot.toolbar_location = None
-    plot.background_fill = COLOR_PRIMARY
-    plot.border_fill = COLOR_PRIMARY
-    plot.outline_line_color = None
-    plot.min_border_top = 0
-
-    # Format legent
-    legend.label_text_color = COLOR_PRIMARY_CONTRAST
-    legend.border_line_color = COLOR_PRIMARY_CONTRAST
-
-    # Tweak hover
-    hover.tooltips = [('hours', '$y')]
-    hover.point_policy = 'follow_mouse'
-
-    # Format plots
-    for g in glyphs:
-        g.glyph.fill_alpha = 1
-        g.glyph.line_color = None
-
-    # Set xaxis properties
-    xaxis.major_label_text_color = COLOR_PRIMARY_CONTRAST
-    xaxis.major_label_orientation = 0
-    xaxis.major_label_standoff = 15
-    xaxis.formatter = DatetimeTickFormatter(
-        formats={
-            'years': ["%a %d %b"],
-        }
-    )
-    xaxis.major_tick_out = None
-    xaxis.major_tick_in = None
-    xaxis.axis_line_color = None
-
-    # Set yaxis properties
-    yaxis.major_label_text_color = COLOR_PRIMARY_CONTRAST
-    yaxis.major_tick_out = None
-    yaxis.major_tick_in = None
-    yaxis.axis_line_color = None
-
     return plot

@@ -8,6 +8,7 @@ from charts.today_summary import get_plot as today_summary_get_plot
 from .process_gtimelog import get_work_df
 from .process_gtimelog import add_parent_activity
 
+
 # Monkey patch method called by components so it returns raw js
 # not js wrapped in script tags and Bokeh function.
 def _new_component_pair(all_models, plots, divs):
@@ -30,6 +31,5 @@ def assemble():
 
     plot_ids = [plot.ref.get('id') for plot in plots.values()]
 
-
     script, divs = embed.components(plots)
-    return render_template('main.html', script=script, divs=divs, plot_ids=plot_ids)
+    return render_template('minimal.html', script=script, divs=divs, plot_ids=plot_ids)
