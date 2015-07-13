@@ -2,22 +2,35 @@
 // plot_ids is a list of all the bokeh index ids
 
 function resize_plots() {
+  var bokeh_obj,
+      div_id, 
+      container, 
+      container_width,
+      plot,
+      cur_width,
+      cur_height,
+      aspect_ratio,
+      new_width,
+      new_height;
+
+  // Note this doesn't account for desired padding in the container
+
   {% for plot_id in plot_ids %}
-      var bokeh_obj = Bokeh.index["{{ plot_id }}"];
-      var div_id = bokeh_obj.el.id;
-      var div = $("#" + div_id);
-      var div_width = div.width();
-      var plot = div.find('.bk-canvas-wrapper');
-      var cur_width = plot.width();
-      var cur_height = plot.height();
-      var aspect_ratio = cur_width / cur_height;
+      bokeh_obj = Bokeh.index["{{ plot_id }}"];
+      div_id = bokeh_obj.el.id;
+      container = $("#" + div_id).parent();
+      container_width = container.width();
+      plot = container.find('.bk-canvas-wrapper');
+      cur_width = plot.width();
+      cur_height = plot.height();
+      aspect_ratio = cur_width / cur_height;
 
-      var plot_width = Math.max(div_width, 200);
-      var plot_height = parseInt(plot_width / aspect_ratio);
-      var plot_height = Math.max(plot_height, 100);
+      new_width = Math.max(container_width, 200);  // We can't set it too small
+      new_height = parseInt(new_width / aspect_ratio);
+      new_height = Math.max(new_height, 100);  // We can't set it too small
 
-      bokeh_obj.model.set('plot_width', plot_width);
-      bokeh_obj.model.set('plot_height', plot_height);
+      bokeh_obj.model.set('plot_width', new_width);
+      bokeh_obj.model.set('plot_height', new_height);
   {% endfor %}
 }
 
