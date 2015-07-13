@@ -1,51 +1,57 @@
 {% extends "base.html" %}
 
 {% block main %}
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-grid">
-  <div class="mdl-card mdl-cell--12-col">
-    <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">Today Summary</h2>
+  <div class="mdl-cell mdl-cell--4-col mdl-grid">
+    <div class="mdl-card mdl-cell--12-col">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Today Summary</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Mauris sagittis pellentesque lacus eleifend lacinia...
+      </div>
     </div>
-    <div class="mdl-card__supporting-text">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Mauris sagittis pellentesque lacus eleifend lacinia...
-    </div>
-  </div>
-  <div class="mdl-card mdl-cell--12-col">
-    <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">Log</h2>
-    </div>
-    <div class="mdl-card__supporting-text">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Mauris sagittis pellentesque lacus eleifend lacinia...
-    </div>
-  </div>
-</div>
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--8-col mdl-grid">
-  <div class="mdl-card mdl-cell--12-col">
-    <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">Timesheet view</h2>
-    </div>
-    <div class="mdl-card__supporting-text">
-      {{ div|safe }}
+    <div class="mdl-card mdl-cell--12-col">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Log</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Mauris sagittis pellentesque lacus eleifend lacinia...
+      </div>
     </div>
   </div>
-</div>
-<!--
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-  <div class="mdl-card mdl-shadow--2dp mdl-cell--12-col">
-    <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">World Clock & Meeting Planner</h2>
-    </div>
-    <div class="mdl-card__supporting-text">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Mauris sagittis pellentesque lacus eleifend lacinia...
+  <div class="mdl-cell mdl-cell--8-col mdl-grid">
+    <div class="mdl-card mdl-cell--12-col">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Timesheet view</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+      </div>
     </div>
   </div>
-  </div>-->
 {% endblock main %}
 
+
 {% block js %}
-  <script type="text/javascript" src="static/javascripts/bokeh.min.js"></script>
-  {{ script|safe }}
+
+  <script type="text/javascript" src="static/javascripts/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript">
+    {% include 'js/resize_plots.js' %}
+
+    function replace_progress() {
+      $("#p2").replaceWith('{{ div|safe }}');
+    }
+    // Get Bokeh script
+    bokehJS = $.getScript("static/javascripts/bokeh.min.js");
+
+    // Once retrieved bokeh: replace the progress bars, run bokeh script, initial resize of plots
+    bokehJS.done( function () {
+      replace_progress();
+      {{ script|safe }}
+      resize_plots();
+    });
+  </script>
+
 {% endblock js %}
