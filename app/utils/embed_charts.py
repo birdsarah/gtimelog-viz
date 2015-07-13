@@ -2,11 +2,11 @@ from flask import render_template
 
 from bokeh import embed
 
-from process_gtimelog import get_work_df
-from process_gtimelog import add_parent_activity
 from charts.all_time_line import get_plot as all_time_line_get_plot
 from charts.today_summary import get_plot as today_summary_get_plot
 
+from .process_gtimelog import get_work_df
+from .process_gtimelog import add_parent_activity
 
 # Monkey patch method called by components so it returns raw js
 # not js wrapped in script tags and Bokeh function.

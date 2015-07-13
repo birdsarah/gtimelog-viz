@@ -2,7 +2,7 @@
 
 from flask import Flask
 
-from embed_charts import assemble
+from utils.embed_charts import assemble
 
 
 app = Flask(__name__)

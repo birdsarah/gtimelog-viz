@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
 
+from utils import timelog_path
+
 
 def _get_raw_df():
-    raw = pd.read_table('timelog.txt', quotechar=' ', sep=': ', names=['timestamp', 'activity'], engine='python',)
+    raw = pd.read_table(timelog_path, quotechar=' ', sep=': ', names=['timestamp', 'activity'], engine='python',)
 
     # Set the column types
 
