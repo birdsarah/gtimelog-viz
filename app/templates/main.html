@@ -7,8 +7,7 @@
         <h2 class="mdl-card__title-text">Today Summary</h2>
       </div>
       <div class="mdl-card__supporting-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Mauris sagittis pellentesque lacus eleifend lacinia...
+        <div id="today_summary" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
       </div>
     </div>
     <div class="mdl-card mdl-cell--12-col">
@@ -27,7 +26,7 @@
         <h2 class="mdl-card__title-text">Timesheet view</h2>
       </div>
       <div class="mdl-card__supporting-text">
-        <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
       </div>
     </div>
   </div>
@@ -41,7 +40,8 @@
     {% include 'js/resize_plots.js' %}
 
     function replace_progress() {
-      $("#p2").replaceWith('{{ div|safe }}');
+      $("#all_time_line").replaceWith('{{ divs.all_time_line|safe }}');
+      $("#today_summary").replaceWith('{{ divs.today_summary|safe }}');
     }
     // Get Bokeh script
     bokehJS = $.getScript("static/javascripts/bokeh.min.js");

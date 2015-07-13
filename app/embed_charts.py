@@ -2,8 +2,10 @@ from flask import render_template
 
 from bokeh import embed
 
-from process_gtimelog import keep_top_level_cats_only
-from charts.all_time_line import get_plot
+from process_gtimelog import get_work_df
+from process_gtimelog import add_parent_activity
+from charts.all_time_line import get_plot as all_time_line_get_plot
+from charts.today_summary import get_plot as today_summary_get_plot
 
 
 # Monkey patch method called by components so it returns raw js
@@ -17,11 +19,17 @@ def _new_component_pair(all_models, plots, divs):
 embed._component_pair = _new_component_pair
 
 
-def assemble(raw):
-    gt_df = keep_top_level_cats_only(raw)
-    all_time_line = get_plot(gt_df)
+def assemble():
+    all_time_line = all_time_line_get_plot(add_parent_activity(get_work_df()))
+    today_summary = today_summary_get_plot(get_work_df())
 
-    plot_ids = [plot.ref.get('id') for plot in [all_time_line]]
+    plots = {
+        'all_time_line': all_time_line,
+        'today_summary': today_summary
+    }
 
-    script, div = embed.components(all_time_line)
-    return render_template('main.html', script=script, div=div, plot_ids=plot_ids)
+    plot_ids = [plot.ref.get('id') for plot in plots.values()]
+
+
+    script, divs = embed.components(plots)
+    return render_template('main.html', script=script, divs=divs, plot_ids=plot_ids)

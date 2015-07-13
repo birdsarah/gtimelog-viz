@@ -1,21 +1,21 @@
 import numpy as np
 from bokeh.models import (
     Plot, Line, ColumnDataSource, DataRange1d,
-    LinearAxis, BasicTicker,
-    DatetimeAxis, DatetimeTicker, DatetimeTickFormatter,
-    BoxZoomTool, PanTool, ResetTool, WheelZoomTool,
-    Grid
+    LinearAxis, BasicTicker, DatetimeAxis, DatetimeTicker, DatetimeTickFormatter, Grid
 )
-from bokeh import palettes
+from .utils import get_palette
 
 import constants as c
 
 
 def get_plot(raw):
-    # Build a dictionary of frames - one for each category
+    # Only interested in parent activities for the all_time_line
+    raw['activity'] = raw['parent activity']
+
     activities = list(raw.activity.unique())
     activities.remove('start')
-    activities.remove('talk')
+    palette = get_palette(activities)
+
     start_df = raw[raw.activity == 'start']
     nan_df = start_df.copy()
     nan_df['delta'] = np.NaN
@@ -23,6 +23,7 @@ def get_plot(raw):
 
     dfs = {}
 
+    # Build a dictionary of frames - one for each category
     for activity in activities:
         activity_df = raw[raw.activity == activity]
 
@@ -45,7 +46,7 @@ def get_plot(raw):
         background_fill=c.COLOR_PRIMARY,
         border_fill=c.COLOR_PRIMARY,
         outline_line_color=None,
-        plot_width=1000,
+        plot_width=1200,
         plot_height=300
     )
 
@@ -79,17 +80,6 @@ def get_plot(raw):
     plot.add_layout(DatetimeAxis(formatter=close_ticks, ticker=close_ticker, **axis_properties), 'below')
     plot.add_layout(DatetimeAxis(formatter=year_ticks, ticker=year_ticker, **axis_properties), 'below')
     plot.add_layout(Grid(dimension=1, ticker=yticker, grid_line_alpha=0.3))
-
-    #tool_opts = dict(dimensions=['width'])
-    #plot.add_tools(
-    #    BoxZoomTool(**tool_opts),
-    #    WheelZoomTool(**tool_opts),
-    #    PanTool(**tool_opts),
-    #    ResetTool(),
-
-    #)
-
-    palette = getattr(palettes, 'Spectral%s' % len(activities))
 
     for i, activity in enumerate(activities):
         frame = dfs[activity][['cumsum_hrs', 'timestamp']]

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-def get_raw_df():
+def _get_raw_df():
     raw = pd.read_table('timelog.txt', quotechar=' ', sep=': ', names=['timestamp', 'activity'], engine='python',)
 
     # Set the column types
@@ -25,13 +25,20 @@ def get_raw_df():
     return raw
 
 
-def keep_top_level_cats_only(gt_df):
+def get_work_df():
+    """
+    Takes a gtimelog DataFrame, and removes the non-work categories
+    """
+    gt_df = _get_raw_df()
+    gt_df = gt_df[~gt_df.activity.str.contains(r'\*\*\*')]
+    return gt_df
+
+
+def add_parent_activity(gt_df):
     """
     Takes a gtimelog DataFrame, and removes the non-work categories, and
     boils the other categories down to their high-level category.
     """
-    gt_df = gt_df[~gt_df.activity.str.contains(r'\*\*\*')]
     # Boil down the categories to the main work categories
-    gt_df.activity = gt_df.activity.str.split(r' ').str[0]
-
+    gt_df['parent activity'] = gt_df.activity.str.split(r' ').str[0]
     return gt_df
