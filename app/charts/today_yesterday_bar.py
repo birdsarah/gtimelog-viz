@@ -1,20 +1,15 @@
 import datetime
 from bokeh.charts import Bar
-from bokeh.models import Legend, LinearAxis, CategoricalAxis, GlyphRenderer, HoverTool
-from bokeh.models import DatetimeTickFormatter
 
-from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
 from .chart_utils import get_palette
 
 
 def get_data(raw):
-    today = datetime.date(2015, 7, 7)
+    today = datetime.date.today()
     yesterday = today - datetime.timedelta(1)
 
     sliced = raw[(raw.timestamp.dt.date == today) | (raw.timestamp.dt.date == yesterday)]
     sliced = sliced[sliced.activity != 'start']
-    sliced['human'] = sliced.delta.dt.seconds / (60 * 60)
-    sliced = sliced[['activity', 'timestamp', 'human']]
 
     summed = sliced.groupby(['activity', sliced.timestamp.dt.date]).sum()
     summed = summed.unstack('activity')

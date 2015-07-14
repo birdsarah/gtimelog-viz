@@ -7,12 +7,9 @@ from .chart_utils import get_palette
 
 
 def get_plot(raw):
-    # Only interested in parent activities for the all_time_line
-    raw['activity'] = raw['parent activity']
-
-    activities = list(raw.activity.unique())
-    activities.remove('start')
-    palette = get_palette(activities)
+    parent_activities = list(raw.parent_activity.unique())
+    parent_activities.remove('Start')
+    palette = get_palette(parent_activities)
 
     start_df = raw[raw.activity == 'start']
     nan_df = start_df.copy()
@@ -22,8 +19,8 @@ def get_plot(raw):
     dfs = {}
 
     # Build a dictionary of frames - one for each category
-    for activity in activities:
-        activity_df = raw[raw.activity == activity]
+    for parent_activity in parent_activities:
+        activity_df = raw[raw.parent_activity == parent_activity]
 
         # Add in the start rows with 0 deltas and do cumsum
         activity_df = activity_df.append(start_df)
@@ -35,7 +32,7 @@ def get_plot(raw):
         activity_df = activity_df.append(nan_df)
         activity_df.sort(['timestamp', 'activity'], inplace=True)
 
-        dfs[activity] = activity_df
+        dfs[parent_activity] = activity_df
 
     # Make the plot
     plot = Plot(
@@ -73,8 +70,8 @@ def get_plot(raw):
     plot.add_layout(DatetimeAxis(formatter=year_ticks, ticker=year_ticker, **axis_properties), 'below')
     plot.add_layout(Grid(dimension=1, ticker=yticker, grid_line_alpha=0.3))
 
-    for i, activity in enumerate(activities):
-        frame = dfs[activity][['cumsum_hrs', 'timestamp']]
+    for i, parent_activity in enumerate(parent_activities):
+        frame = dfs[parent_activity][['cumsum_hrs', 'timestamp']]
         source = ColumnDataSource(frame)
         line = Line(
             line_color=palette[i],

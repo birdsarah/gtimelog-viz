@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-from utils import timelog_path
+from . import timelog_path
 
 
 def _get_raw_df():
@@ -36,11 +36,28 @@ def get_work_df():
     return gt_df
 
 
-def add_parent_activity(gt_df):
+def add_processed_columns(gt_df, general_activity_name='general'):
     """
-    Takes a gtimelog DataFrame, and removes the non-work categories, and
-    boils the other categories down to their high-level category.
+    Takes a gtimelog DataFrame, and adds the following columns:
+        * 'human' - the time delta in hours to 2 decimal places
+        * 'parent_activity' - if the activity is 'Test data - sub category', parent is 'Test data'
+        * 'sub_activity' - if the activity is 'Test data - sub category', sub is 'sub category'
+    Also:
+        * If the activity is the same as the parent activity,
+          then sub_activity is set to general_activity_name
+        * capitalizes the new activity columns
     """
-    # Boil down the categories to the main work categories
-    gt_df['parent activity'] = gt_df.activity.str.split(r' ').str[0]
+    gt_df['human'] = gt_df.delta.dt.seconds / (60 * 60)
+    gt_df.human = gt_df.human.round(2)
+
+    gt_df['parent_activity'] = gt_df.activity.str.split(' - ').str[0]
+    gt_df.parent_activity = gt_df.parent_activity.str.capitalize()
+
+    gt_df['sub_activity'] = gt_df.activity.str.split(' - ').str[1]
+    gt_df.sub_activity = np.where(
+        gt_df.activity == gt_df.parent_activity,
+        general_activity_name,
+        gt_df.sub_activity
+    )
+    gt_df.sub_activity = gt_df.sub_activity.str.capitalize()
     return gt_df
