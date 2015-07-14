@@ -40,7 +40,8 @@ def get_plot(raw):
         y_range=DataRange1d(),
         outline_line_color=None,
         plot_width=1200,
-        plot_height=300
+        plot_height=300,
+        toolbar_location=None,
     )
 
     yticker = BasicTicker(min_interval=4)

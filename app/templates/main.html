@@ -35,7 +35,6 @@
 
 {% block js %}
 
-  <script type="text/javascript" src="static/javascripts/jquery-2.1.4.min.js"></script>
   <script type="text/javascript">
     {% include 'js/resize_plots.js' %}
 
@@ -43,8 +42,6 @@
       $("#all_time_line").replaceWith('{{ divs.all_time_line|safe }}');
       $("#today_summary").replaceWith('{{ divs.today_summary|safe }}');
     }
-    // Get Bokeh script
-    bokehJS = $.getScript("static/javascripts/bokeh.min.js");
 
     // Once retrieved bokeh: replace the progress bars, run bokeh script, initial resize of plots
     bokehJS.done( function () {

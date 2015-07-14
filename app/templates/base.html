@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>gTimeLog Dashboard</title>
 
+    <link rel="stylesheet" href="static/stylesheets/bokeh.min.css">
     <link rel="stylesheet" href="static/stylesheets/styles.css">
   </head>
   <body>
@@ -33,6 +34,11 @@
       </main>
     </div>
     <script src="static/javascripts/material.js"></script>
+    <script type="text/javascript" src="static/javascripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+      // Get Bokeh script
+      bokehJS = $.getScript("static/javascripts/bokeh.min.js");
+    </script>
     {% block js %}
     {% endblock js %}
   </body>

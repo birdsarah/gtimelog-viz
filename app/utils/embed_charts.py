@@ -4,6 +4,7 @@ from bokeh import embed
 
 from charts.all_time_line import get_plot as all_time_line_get_plot
 from charts.today_yesterday_bar import get_plot as today_yesterday_bar_get_plot
+from charts.today_summary import get_plot as today_summary_get_plot
 
 from .process_gtimelog import get_work_df
 from .process_gtimelog import add_processed_columns
@@ -23,11 +24,12 @@ embed._component_pair = _new_component_pair
 def assemble():
     df = add_processed_columns(get_work_df())
     all_time_line = all_time_line_get_plot(df.copy())
-    today_yesterday_bar = today_yesterday_bar_get_plot(df.copy())
+    #today_yesterday_bar = today_yesterday_bar_get_plot(df.copy())
+    today_summary = today_summary_get_plot(df.copy())
 
     plots = {
         'all_time_line': all_time_line,
-        'today_summary': today_yesterday_bar
+        'today_summary': today_summary
     }
 
     plot_ids = [plot.ref.get('id') for plot in plots.values()]
