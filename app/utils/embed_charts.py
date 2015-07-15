@@ -25,14 +25,24 @@ def assemble():
     df = add_processed_columns(get_work_df())
     all_time_line = all_time_line_get_plot(df.copy())
     #today_yesterday_bar = today_yesterday_bar_get_plot(df.copy())
-    today_summary = today_summary_get_plot(df.copy())
+    today_categories, today_plots = today_summary_get_plot(df.copy())
 
     plots = {
         'all_time_line': all_time_line,
-        'today_summary': today_summary
     }
 
     plot_ids = [plot.ref.get('id') for plot in plots.values()]
+    today_plot_ids = [plot.ref.get('id') for plot in today_plots.values()]
+    plot_ids += today_plot_ids
 
-    script, divs = embed.components(plots)
-    return render_template('minimal.html', script=script, divs=divs, plot_ids=plot_ids)
+    today_script, today_divs = embed.components(today_plots)
+    other_script, other_divs = embed.components(plots)
+    return render_template(
+        'minimal.html',
+        other_script=other_script,
+        other_divs=other_divs,
+        plot_ids=plot_ids,
+        today_categories=today_categories,
+        today_script=today_script,
+        today_divs=today_divs,
+    )

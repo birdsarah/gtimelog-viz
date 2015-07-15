@@ -3,8 +3,6 @@ import datetime
 import pandas as pd
 
 from bokeh.charts import Bar
-from bokeh.document import Document
-from bokeh.io import hplot, vplot
 from bokeh.models import Range1d, DataTable, ColumnDataSource, TableColumn
 
 from .chart_utils import get_palette
@@ -52,7 +50,8 @@ def get_plot(gt_df):
 
     categories = list(data.parent_activity.unique())
     palette = get_palette(categories)
-    doc = Document()
+
+    plots = {}
 
     for i, category in enumerate(categories):
         parent_df = data[data.parent_activity == category]
@@ -60,5 +59,7 @@ def get_plot(gt_df):
         summed['from total'] = summed.human.sum() - summed.human
         bar_plot = make_bar(palette[i], category, summed)
         table = make_table(category, summed)
-        doc.add(hplot(bar_plot, table))
-    return doc
+        plots[category + '_bar'] = bar_plot
+        plots[category + '_table'] = table
+
+    return categories, plots
