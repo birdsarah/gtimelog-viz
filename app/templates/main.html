@@ -40,6 +40,7 @@
 
     function replace_progress() {
       $("#all_time_line").replaceWith('{{ other_divs.all_time_line|safe }}');
+      $("#detail_time_line").replaceWith('{{ other_divs.detail_time_line|safe }}');
     }
 
     // Once retrieved bokeh: replace the progress bars, run bokeh script, initial resize of plots
