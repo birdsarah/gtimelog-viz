@@ -2,11 +2,20 @@
 
 {% block main %}
   <div class="mdl-cell mdl-cell--4-col mdl-grid">
-    <div class="mdl-card mdl-cell--12-col">
-        <div id="today_summary" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+    <div class="today-summary-wrapper mdl-cell mdl-cell--12-col mdl-grid">
+      {% for category in today_categories %}
+      {% set cat_bar = [category, 'bar']|join('_') %}
+      {% set cat_table = [category, 'table']|join('_') %}
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+            {{ today_divs[cat_bar] | safe }}
+      </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+            {{ today_divs[cat_table] | safe }}
+      </div>
+      {% endfor %}
     </div>
   </div>
-  <div class="mdl-cell mdl-cell--8-col mdl-grid">
+  <div class="mdl-cell mdl-cell--8-col">
       <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
   </div>
 {% endblock main %}
