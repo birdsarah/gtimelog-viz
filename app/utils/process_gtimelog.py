@@ -55,7 +55,7 @@ def add_processed_columns(gt_df, general_activity_name='general'):
 
     gt_df['sub_activity'] = gt_df.activity.str.split(' - ').str[1]
     gt_df.sub_activity = np.where(
-        gt_df.activity == gt_df.parent_activity,
+        gt_df.activity.str.lower() == gt_df.parent_activity.str.lower(),
         general_activity_name,
         gt_df.sub_activity
     )
