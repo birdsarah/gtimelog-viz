@@ -169,7 +169,7 @@ def get_plot(raw, today):
         var week_end = start.add(x, 'weeks').format('x');
         $("#one_week_before").text(start.format('ddd, DD MMM YYYY'));
         var newStart = start.format('YYYY-MM-DD');
-        var week_start = start.add(1, 'weeks').format('x');
+        var week_start = start.add(6, 'days').format('x');
         $("#today").text(start.format('ddd, DD MMM YYYY'));
 
         week_selection_data['start'] = [week_start];

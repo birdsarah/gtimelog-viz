@@ -30,7 +30,7 @@ def timesheet():
     if end:
         end = get_time(request.args.get('end'))
     else:
-        end = start + datetime.timedelta(weeks=1)
+        end = start + datetime.timedelta(days=6)
     rendered_timesheet = assemble_timesheet(start, end)
     return rendered_timesheet
 
