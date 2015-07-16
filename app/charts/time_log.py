@@ -7,7 +7,7 @@ from bokeh.models import (
     FactorRange,
     HoverTool,
 )
-from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
+from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST, COLOR_PRIMARY_DARK
 
 
 def get_plot(processed, today):
@@ -38,6 +38,9 @@ def get_plot(processed, today):
         axis.major_label_text_color = COLOR_PRIMARY_CONTRAST
         axis.axis_line_color = COLOR_PRIMARY
         axis.major_tick_line_color = COLOR_PRIMARY
+
+    for grid in [p.xgrid[0], p.ygrid[0]]:
+        grid.grid_line_color = COLOR_PRIMARY_DARK
 
     p.quad(left='start', right='end', top='activity_top', bottom='activity_bottom', source=source)
     p.add_tools(HoverTool(tooltips='@human hrs'))
