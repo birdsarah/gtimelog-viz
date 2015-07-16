@@ -4,8 +4,6 @@ from flask import render_template
 
 from bokeh import embed
 
-#from charts.all_time_line import get_plot as all_time_line_get_plot
-#from charts.today_yesterday_bar import get_plot as today_yesterday_bar_get_plot
 from charts.today_summary import get_plot as today_summary_get_plot
 from charts.time_line_selector import get_plot as time_line_selector_get_plot
 from charts.time_log import get_plot as time_log_get_plot
