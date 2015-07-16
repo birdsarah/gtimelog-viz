@@ -548,11 +548,10 @@ $grid-cell-default-columns: $grid-phone-columns !default;
 
 /* DATA TABLE */
 
-$data-table-header-color: rgba(#000, 0.54);
-$data-table-divider-color: rgba(#000, 0.12);
-
-$data-table-hover-color: #eeeeee;
-$data-table-selection-color: #e0e0e0;
+$data-table-header-color: $primary-contrast;
+$data-table-divider-color: unquote("rgba(#{$color-primary-contrast}, 0.26)");
+$data-table-hover-color: $primary-contrast;
+$data-table-selection-color: $primary-contrast;
 
 $data-table-dividers: 1px solid $data-table-divider-color;
 
