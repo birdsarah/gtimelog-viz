@@ -41,7 +41,6 @@ def assemble(today):
     plots.update(today_plots)
 
     plot_ids = [plot.ref.get('id') for plot in plots.values()]
-
     script, divs = embed.components(plots)
 
     one_week_before = today - datetime.timedelta(weeks=1)
