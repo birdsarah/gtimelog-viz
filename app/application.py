@@ -16,6 +16,7 @@ get_time = lambda x: datetime.datetime.strptime(x, '%Y-%m-%d')
 def main(date=None):
     try:
         today = get_time(date)
+        today = today + datetime.timedelta(days=1) - datetime.timedelta(minutes=1)  # We want it to be the end of the day
     except (TypeError, ValueError):
         today = datetime.datetime.today()
     rendered_html = assemble(today)

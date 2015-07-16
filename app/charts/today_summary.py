@@ -30,8 +30,8 @@ def make_table(category, data):
             TableColumn(field="sub_activity", title=category),
             TableColumn(field="human", title="Total")
         ],
-        width=200,
-        height=150,
+        width=300,
+        height=200,
     )
     return table
 

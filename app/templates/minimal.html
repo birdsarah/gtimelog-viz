@@ -2,16 +2,19 @@
 
 {% block main %}
   <div class="mdl-grid">
-    <div class="today-summary-wrapper mdl-cell mdl-cell--4-col">
+    <div class="mdl-cell mdl-cell--4-col">
+      <h5>Today - {{ today.strftime("%a, %d %b '%y")}}</h5>
+
+        <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         <span id="progress" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></span>
         {% for category in today_categories %}
           {% set cat_bar = [category, 'bar']|join('_') %}
           {% set cat_table = [category, 'table']|join('_') %}
           <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
                   {{ divs[cat_bar] | safe }}
             </div>
-            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+            <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
                   {{ divs[cat_table] | safe }}
             </div>
           </div>
@@ -20,13 +23,6 @@
     <div class="mdl-cell mdl-cell--8-col">
         <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         <div id="detail_time_line" class""></div>
-    </div>
-  </div>
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--4-col">
-        <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-    </div>
-    <div class="mdl-cell mdl-cell--8-col">
       {% include 'timesheet.html' %}
     </div>
   </div>
