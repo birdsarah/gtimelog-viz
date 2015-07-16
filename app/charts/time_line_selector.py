@@ -158,14 +158,18 @@ def get_plot(raw, today):
         var start = moment(detail_start);
 
         var week_end = start.add(x, 'weeks').format('x');
-        $("#one_week_before").val(start.format('ddd, Do MMMM YYYY'));
-        var week_start = start.add(1, 'weeks').format('x');  // Subtract 1 week because obj was updated
-        $("#today").val(start.format('ddd, Do MMMM YYYY'));
+        $("#one_week_before").text(start.format('ddd, DD MMM YYYY'));
+        var newStart = start.format('YYYY-MM-DD');
+        var week_start = start.add(1, 'weeks').format('x');
+        $("#today").text(start.format('ddd, DD MMM YYYY'));
 
         week_selection_data['start'] = [week_start];
         week_selection_data['end'] = [week_end];
         week_selection_source.trigger('change');
 
+        var url = '/timesheet/?start=' + newStart;
+        $("#timesheet_submit").attr('href', url);
+        // TODO - mark timesheet as needing updating!!
     """
 
     detail_xrange_callback = Callback(args={}, code=detail_code)

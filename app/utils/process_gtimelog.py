@@ -60,6 +60,9 @@ def add_processed_columns(gt_df, general_activity_name='general'):
         gt_df.sub_activity
     )
     gt_df.sub_activity = gt_df.sub_activity.str.capitalize()
+
+    gt_df['formatted_activity'] = gt_df.parent_activity + ' (' + gt_df.sub_activity + ')'
+
     return gt_df
 
 
@@ -67,7 +70,6 @@ def get_today(today, gt_df):
     """
     Returns today, with no start row in it
     """
-    print(gt_df.timestamp.dt.date)
     today_df = gt_df[gt_df.timestamp.dt.date == today.date()]
     today_df = today_df[today_df.activity != 'start']
     return today_df

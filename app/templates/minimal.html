@@ -27,11 +27,7 @@
         <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
     </div>
     <div class="mdl-cell mdl-cell--8-col">
-      <form>
-        <input id="one_week_before" name="start" value="{{ one_week_before.strftime('%a, %d %B %Y') }}"></input>
-        <input id="today" name="start" value="{{ today.strftime('%a, %d %B %Y') }}"></input>
-      </form>
+      {% include 'timesheet.html' %}
     </div>
   </div>
 {% endblock main %}
-

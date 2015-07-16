@@ -19,7 +19,6 @@ def get_plot(processed, today):
 
     one_week = processed[(processed.timestamp >= start) & (processed.timestamp <= end)]
     one_week = one_week[one_week.activity != 'start']
-    one_week['formatted_activity'] = one_week.parent_activity + ' (' + one_week.sub_activity + ')'
     one_week['activity_bottom'] = one_week.formatted_activity + ':0.1'
     one_week['activity_top'] = one_week.formatted_activity + ':0.9'
 

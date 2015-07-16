@@ -9,6 +9,7 @@ from bokeh import embed
 from charts.today_summary import get_plot as today_summary_get_plot
 from charts.time_line_selector import get_plot as time_line_selector_get_plot
 from charts.time_log import get_plot as time_log_get_plot
+from charts.timesheet_for_selected_week import get_timesheet
 
 from .process_gtimelog import get_work_df, add_processed_columns, get_today
 
@@ -44,7 +45,7 @@ def assemble(today):
     script, divs = embed.components(plots)
 
     one_week_before = today - datetime.timedelta(weeks=1)
-    weekly_timesheet = None
+    weekly_timesheet = get_timesheet(df.copy(), one_week_before, today)
 
     return render_template(
         'minimal.html',
@@ -55,4 +56,15 @@ def assemble(today):
         today_categories=today_categories,
         one_week_before=one_week_before,
         weekly_timesheet=weekly_timesheet,
+    )
+
+
+def assemble_timesheet(start, end):
+    df = add_processed_columns(get_work_df())
+    weekly_timesheet = get_timesheet(df, start, end)
+    return render_template(
+        'timesheet.html',
+        today=end,
+        one_week_before=start,
+        weekly_timesheet=weekly_timesheet
     )
