@@ -50,8 +50,9 @@ def _make_base_plot(dfs, activities, x_range, plot_width=900):
         y_range=Range1d(0, 11),
         outline_line_color=None,
         plot_width=plot_width,
-        plot_height=200,
-        toolbar_location=None
+        plot_height=150,
+        toolbar_location=None,
+        min_border_top=0,
     )
 
     yticker = BasicTicker(min_interval=3)

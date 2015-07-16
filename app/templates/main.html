@@ -39,6 +39,7 @@
     {% include 'js/resize_plots.js' %}
 
     function replace_progress() {
+      $("#progress").replaceWith('');
       {% for key in divs.keys() %}
         $("#{{ key }}").replaceWith('{{ divs[key] | safe }}');
       {% endfor %}

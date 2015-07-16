@@ -3,6 +3,7 @@
 {% block main %}
   <div class="mdl-grid">
     <div class="today-summary-wrapper mdl-cell mdl-cell--4-col">
+        <span id="progress" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></span>
         {% for category in today_categories %}
           {% set cat_bar = [category, 'bar']|join('_') %}
           {% set cat_table = [category, 'table']|join('_') %}
