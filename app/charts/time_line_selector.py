@@ -11,12 +11,16 @@ from bokeh.models import (
 )
 
 from .chart_utils import get_palette
+from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
+
+AXIS_PROPERTIES = dict(
+    major_label_text_color='white',
+)
 
 
 def get_sources_and_categories(raw):
     parent_activities = list(raw.parent_activity.unique())
     parent_activities.remove('Start')
-    palette = get_palette(parent_activities)
 
     start_df = raw[raw.activity == 'start']
     nan_df = start_df.copy()
@@ -49,9 +53,12 @@ def _make_base_plot(dfs, activities, x_range, plot_width=900):
         x_range=x_range,
         y_range=Range1d(0, 11),
         outline_line_color=None,
+        background_fill=COLOR_PRIMARY,
+        border_fill=COLOR_PRIMARY,
         plot_width=plot_width,
         plot_height=150,
         min_border_top=0,
+        toolbar_location=None,
     )
 
     yticker = BasicTicker(min_interval=3)
@@ -65,11 +72,8 @@ def _make_base_plot(dfs, activities, x_range, plot_width=900):
         }
     )
 
-    axis_properties = dict(
-        #major_label_text_color='white',
-    )
-    plot.add_layout(LinearAxis(ticker=yticker, **axis_properties), 'left')
-    plot.add_layout(DatetimeAxis(formatter=close_ticks, ticker=close_ticker, **axis_properties), 'below')
+    plot.add_layout(LinearAxis(ticker=yticker, **AXIS_PROPERTIES), 'left')
+    plot.add_layout(DatetimeAxis(formatter=close_ticks, ticker=close_ticker, **AXIS_PROPERTIES), 'below')
     plot.add_layout(Grid(dimension=1, ticker=yticker, grid_line_alpha=0.3))
 
     palette = get_palette(activities)
@@ -105,11 +109,11 @@ def get_plot(raw, today):
     # Selection indicators
     highlight = Quad(
         left='start', right='end', bottom=0, top=12,
-        fill_color='#3F51B5', line_color='white', fill_alpha=0.2,
+        fill_color='white', line_color=COLOR_PRIMARY_CONTRAST, fill_alpha=0.2,
     )
     lowlight = Quad(
         left='start', right='end', bottom=0, top=12,
-        fill_color='black', line_color='white', fill_alpha=0.5,
+        fill_color=COLOR_PRIMARY, line_color=COLOR_PRIMARY_CONTRAST, fill_alpha=0.5,
     )
 
     # Make the complete timeline plot
@@ -129,8 +133,10 @@ def get_plot(raw, today):
             'hours': ["%Y"]
         }
     )
-    all_plot.add_layout(DatetimeAxis(formatter=year_ticks, ticker=year_ticker), 'below')
-
+    all_plot.add_layout(
+        DatetimeAxis(formatter=year_ticks, ticker=year_ticker, **AXIS_PROPERTIES),
+        'below'
+    )
 
     # Make the detail plot
     detail_plot = _make_base_plot(dfs, cats, month_range)
