@@ -25,7 +25,7 @@ function resize_plots() {
       cur_height = plot.height();
       aspect_ratio = cur_width / cur_height;
 
-      new_width = Math.max(container_width, 200);  // We can't set it too small
+      new_width = Math.max(container_width, 100);  // We can't set it too small
       new_height = parseInt(new_width / aspect_ratio);
       new_height = Math.max(new_height, 100);  // We can't set it too small
 

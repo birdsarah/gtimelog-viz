@@ -51,7 +51,6 @@ def _make_base_plot(dfs, activities, x_range, plot_width=900):
         outline_line_color=None,
         plot_width=plot_width,
         plot_height=150,
-        toolbar_location=None,
         min_border_top=0,
     )
 
@@ -137,6 +136,7 @@ def get_plot(raw, today):
     detail_plot = _make_base_plot(dfs, cats, month_range)
     detail_plot.add_tools(PanTool(dimensions=['width']))
     detail_plot.add_tools(WheelZoomTool(dimensions=['width']))
+    detail_plot.add_tools(ResetTool())
 
     week_selection_source = ColumnDataSource({'start': [week_range.start], 'end': [week_range.end]})
     detail_plot.add_glyph(week_selection_source, highlight)
@@ -168,8 +168,7 @@ def get_plot(raw, today):
         week_selection_source.trigger('change');
 
         var url = '/timesheet/?start=' + newStart;
-        $("#timesheet_submit").attr('href', url);
-        // TODO - mark timesheet as needing updating!!
+        $("#timesheet_submit").attr('href', url).addClass("mdl-button--colored");
     """
 
     detail_xrange_callback = Callback(args={}, code=detail_code)
