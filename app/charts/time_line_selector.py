@@ -86,14 +86,13 @@ def _make_base_plot(dfs, activities, x_range, plot_width=900):
     return plot
 
 
-def get_plot(raw):
+def get_plot(raw, today):
 
     dfs, cats = get_sources_and_categories(raw)
 
     # Some times
 
     first_day = raw.loc[0, 'timestamp']
-    today = datetime.datetime.today()
     one_week_ago = today - datetime.timedelta(weeks=1)
     two_weeks_ago = today - datetime.timedelta(weeks=2)
     one_week_forward = today + datetime.timedelta(weeks=1)
@@ -158,13 +157,14 @@ def get_plot(raw):
         var start = moment(detail_start);
 
         var week_end = start.add(x, 'weeks').format('x');
+        $("#one_week_before").val(start.format('ddd, Do MMMM YYYY'));
         var week_start = start.add(1, 'weeks').format('x');  // Subtract 1 week because obj was updated
+        $("#today").val(start.format('ddd, Do MMMM YYYY'));
 
         week_selection_data['start'] = [week_start];
         week_selection_data['end'] = [week_end];
         week_selection_source.trigger('change');
 
-        console.log('The week starts on ' + start.format());
     """
 
     detail_xrange_callback = Callback(args={}, code=detail_code)

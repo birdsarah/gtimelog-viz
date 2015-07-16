@@ -1,14 +1,16 @@
+import datetime
+
 from flask import render_template
 
 from bokeh import embed
 
-from charts.all_time_line import get_plot as all_time_line_get_plot
-from charts.today_yesterday_bar import get_plot as today_yesterday_bar_get_plot
+#from charts.all_time_line import get_plot as all_time_line_get_plot
+#from charts.today_yesterday_bar import get_plot as today_yesterday_bar_get_plot
 from charts.today_summary import get_plot as today_summary_get_plot
 from charts.time_line_selector import get_plot as time_line_selector_get_plot
+from charts.time_log import get_plot as time_log_get_plot
 
-from .process_gtimelog import get_work_df
-from .process_gtimelog import add_processed_columns
+from .process_gtimelog import get_work_df, add_processed_columns, get_today
 
 
 # Monkey patch method called by components so it returns raw js
@@ -22,30 +24,36 @@ def _new_component_pair(all_models, plots, divs):
 embed._component_pair = _new_component_pair
 
 
-def assemble():
-    df = add_processed_columns(get_work_df())
-    #all_time_line = all_time_line_get_plot(df.copy())
-    #today_yesterday_bar = today_yesterday_bar_get_plot(df.copy())
-    today_categories, today_plots = today_summary_get_plot(df.copy())
-    all_time_line, detail_time_line = time_line_selector_get_plot(df.copy())
+def assemble(today):
 
+    work_df = get_work_df()
+    df = add_processed_columns(work_df)
+    today_df = get_today(today, df.copy())
+
+    all_time_line, detail_time_line = time_line_selector_get_plot(df.copy(), today)
+    time_log = time_log_get_plot(df.copy(), today)
     plots = {
         'all_time_line': all_time_line,
         'detail_time_line': detail_time_line,
+        'time_log': time_log,
     }
+    today_categories, today_plots = today_summary_get_plot(today_df)
+    plots.update(today_plots)
 
     plot_ids = [plot.ref.get('id') for plot in plots.values()]
-    today_plot_ids = [plot.ref.get('id') for plot in today_plots.values()]
-    plot_ids += today_plot_ids
 
-    today_script, today_divs = embed.components(today_plots)
-    other_script, other_divs = embed.components(plots)
+    script, divs = embed.components(plots)
+
+    one_week_before = today - datetime.timedelta(weeks=1)
+    weekly_timesheet = None
+
     return render_template(
         'minimal.html',
-        other_script=other_script,
-        other_divs=other_divs,
+        today=today,
+        script=script,
+        divs=divs,
         plot_ids=plot_ids,
         today_categories=today_categories,
-        today_script=today_script,
-        today_divs=today_divs,
+        one_week_before=one_week_before,
+        weekly_timesheet=weekly_timesheet,
     )

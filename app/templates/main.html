@@ -39,15 +39,15 @@
     {% include 'js/resize_plots.js' %}
 
     function replace_progress() {
-      $("#all_time_line").replaceWith('{{ other_divs.all_time_line|safe }}');
-      $("#detail_time_line").replaceWith('{{ other_divs.detail_time_line|safe }}');
+      {% for key in divs.keys() %}
+        $("#{{ key }}").replaceWith('{{ divs[key] | safe }}');
+      {% endfor %}
     }
 
     // Once retrieved bokeh: replace the progress bars, run bokeh script, initial resize of plots
     bokehJS.done( function () {
       replace_progress();
-      {{ other_script|safe }}
-      {{ today_script|safe }}
+      {{ script|safe }}
       resize_plots();
     });
   </script>

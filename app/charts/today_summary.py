@@ -1,18 +1,9 @@
-import datetime
-
 import pandas as pd
 
 from bokeh.charts import Bar
 from bokeh.models import Range1d, DataTable, ColumnDataSource, TableColumn
 
 from .chart_utils import get_palette
-
-
-def get_data(gt_df):
-    today = datetime.date(2015, 7, 13)
-    today_df = gt_df[gt_df.timestamp.dt.date == today]
-    today_df = today_df[today_df.activity != 'start']
-    return today_df
 
 
 def make_bar(color, category, data):
@@ -45,9 +36,7 @@ def make_table(category, data):
     return table
 
 
-def get_plot(gt_df):
-    data = get_data(gt_df)
-
+def get_plot(data):
     categories = list(data.parent_activity.unique())
     palette = get_palette(categories)
 

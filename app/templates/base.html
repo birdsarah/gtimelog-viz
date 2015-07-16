@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>gTimeLog Dashboard</title>
 
-    <link rel="stylesheet" href="static/stylesheets/bokeh.min.css">
-    <link rel="stylesheet" href="static/stylesheets/styles.css">
+    <link rel="stylesheet" href="/static/stylesheets/bokeh.min.css">
+    <link rel="stylesheet" href="/static/stylesheets/styles.css">
   </head>
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">gTimeLog Dashboard</span>
+          <span class="mdl-layout-title">gTimeLog Dashboard - {{ today.strftime('%A, %d %B %Y %I:%M%p') }}</span>
           <div class="mdl-layout-spacer"></div>
           <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
             <i class="material-icons">more_vert</i>
@@ -27,18 +27,16 @@
         </div>
       </header>
       <main class="mdl-layout__content">
-        <div class="mdl-grid">
         {% block main %}
         {% endblock main %}
-        </div>
       </main>
     </div>
-    <script src="static/javascripts/material.js"></script>
-    <script type="text/javascript" src="static/javascripts/jquery-2.1.4.min.js"></script>
+    <script src="/static/javascripts/material.js"></script>
+    <script type="text/javascript" src="/static/javascripts/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
       // Get Bokeh script
-      bokehJS = $.getScript("static/javascripts/bokeh.min.js");
-      moment = $.getScript("static/javascripts/moment.min.js");
+      bokehJS = $.getScript("/static/javascripts/bokeh.min.js");
+      moment = $.getScript("/static/javascripts/moment.min.js");
     </script>
     {% block js %}
     {% endblock js %}

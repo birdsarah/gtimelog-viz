@@ -1,23 +1,36 @@
 {% extends 'main.html' %}
 
 {% block main %}
-  <div class="mdl-cell mdl-cell--4-col mdl-grid">
-    <div class="today-summary-wrapper mdl-cell mdl-cell--12-col mdl-grid">
-      {% for category in today_categories %}
-      {% set cat_bar = [category, 'bar']|join('_') %}
-      {% set cat_table = [category, 'table']|join('_') %}
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
-            {{ today_divs[cat_bar] | safe }}
-      </div>
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
-            {{ today_divs[cat_table] | safe }}
-      </div>
-      {% endfor %}
+  <div class="mdl-grid">
+    <div class="today-summary-wrapper mdl-cell mdl-cell--4-col">
+        {% for category in today_categories %}
+        {% set cat_bar = [category, 'bar']|join('_') %}
+        {% set cat_table = [category, 'table']|join('_') %}
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+                {{ divs[cat_bar] | safe }}
+          </div>
+          <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+                {{ divs[cat_table] | safe }}
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">
+        <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        <div id="detail_time_line" class""></div>
     </div>
   </div>
-  <div class="mdl-cell mdl-cell--8-col">
-      <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-      <div id="detail_time_line" class""></div>
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
+        <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">
+      <form>
+        <input id="one_week_before" name="start" value="{{ one_week_before.strftime('%a, %d %B %Y') }}"></input>
+        <input id="today" name="start" value="{{ today.strftime('%a, %d %B %Y') }}"></input>
+      </form>
+    </div>
   </div>
 {% endblock main %}
 
