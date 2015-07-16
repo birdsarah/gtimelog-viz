@@ -1,19 +1,78 @@
 import pandas as pd
 
 from bokeh.charts import Bar
-from bokeh.models import Range1d, DataTable, ColumnDataSource, TableColumn
+from bokeh.models import (
+    Range1d,
+    DataTable,
+    ColumnDataSource,
+    TableColumn,
+    Legend,
+    HoverTool,
+    GlyphRenderer,
+    CategoricalAxis,
+    LinearAxis,
+    DatetimeTickFormatter,
+)
 
 from .chart_utils import get_palette
+from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
 
 
 def make_bar(color, category, data):
-    bar_plot = Bar(data, width=200, height=200, palette=[color, '#dddddd'], tools='', stacked=True)
-    bar_plot.toolbar_location = None
-    bar_plot.outline_line_color = None
-    bar_plot.y_range = Range1d(0, 8)
-    bar_plot.min_border = 5
-    bar_plot.min_border_top = 10
-    return bar_plot
+    plot = Bar(data, width=200, height=200, palette=[color, '#dddddd'], tools='', stacked=True)
+    plot.toolbar_location = None
+    plot.outline_line_color = None
+    plot.y_range = Range1d(0, 8)
+    plot.min_border = 5
+    plot.min_border_top = 10
+
+    # Get chart items
+    legend = plot.select({'type': Legend})
+    hover = plot.select({'type': HoverTool})
+    glyphs = plot.select({'type': GlyphRenderer})
+    xaxis = plot.select({'type': CategoricalAxis})
+    yaxis = plot.select({'type': LinearAxis})
+
+    # Format chart properties
+    plot.toolbar_location = None
+    plot.background_fill = COLOR_PRIMARY
+    plot.border_fill = COLOR_PRIMARY
+    plot.outline_line_color = None
+    plot.min_border_top = 0
+
+    # Format legent
+    legend.label_text_color = COLOR_PRIMARY_CONTRAST
+    legend.border_line_color = COLOR_PRIMARY_CONTRAST
+
+    # Tweak hover
+    hover.tooltips = [('hours', '$y')]
+    hover.point_policy = 'follow_mouse'
+
+    # Format plots
+    for g in glyphs:
+        g.glyph.fill_alpha = 1
+        g.glyph.line_color = None
+
+    # Set xaxis properties
+    xaxis.major_label_text_color = COLOR_PRIMARY_CONTRAST
+    xaxis.major_label_orientation = 0
+    xaxis.major_label_standoff = 15
+    xaxis.formatter = DatetimeTickFormatter(
+        formats={
+            'years': ["%a %d %b"],
+        }
+    )
+    xaxis.major_tick_out = None
+    xaxis.major_tick_in = None
+    xaxis.axis_line_color = None
+
+    # Set yaxis properties
+    yaxis.major_label_text_color = COLOR_PRIMARY_CONTRAST
+    yaxis.major_tick_out = None
+    yaxis.major_tick_in = None
+    yaxis.axis_line_color = None
+
+    return plot
 
 
 def make_table(category, data):

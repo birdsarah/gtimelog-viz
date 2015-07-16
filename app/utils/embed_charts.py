@@ -13,7 +13,6 @@ from charts.timesheet_for_selected_week import get_timesheet
 
 from .process_gtimelog import get_work_df, add_processed_columns, get_today
 
-
 # Monkey patch method called by components so it returns raw js
 # not js wrapped in script tags and Bokeh function.
 def _new_component_pair(all_models, plots, divs):
