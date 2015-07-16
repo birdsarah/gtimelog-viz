@@ -2,7 +2,6 @@ import pandas as pd
 
 from bokeh.charts import Bar
 from bokeh.models import (
-    Range1d,
     DataTable,
     ColumnDataSource,
     TableColumn,
@@ -11,18 +10,16 @@ from bokeh.models import (
     GlyphRenderer,
     CategoricalAxis,
     LinearAxis,
-    DatetimeTickFormatter,
 )
 
 from .chart_utils import get_palette
 from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
 
 
-def make_bar(color, category, data):
+def make_bar(color, data):
     plot = Bar(data, width=200, height=200, palette=[color, '#dddddd'], tools='', stacked=True)
     plot.toolbar_location = None
     plot.outline_line_color = None
-    plot.y_range = Range1d(0, 8)
     plot.min_border = 5
     plot.min_border_top = 10
 
@@ -57,11 +54,6 @@ def make_bar(color, category, data):
     xaxis.major_label_text_color = COLOR_PRIMARY_CONTRAST
     xaxis.major_label_orientation = 0
     xaxis.major_label_standoff = 15
-    xaxis.formatter = DatetimeTickFormatter(
-        formats={
-            'years': ["%a %d %b"],
-        }
-    )
     xaxis.major_tick_out = None
     xaxis.major_tick_in = None
     xaxis.axis_line_color = None
@@ -105,7 +97,7 @@ def get_plot(data):
         parent_df = data[data.parent_activity == category]
         summed = parent_df.groupby('sub_activity').sum().sort('human', ascending=False)
         summed['from total'] = summed.human.sum() - summed.human
-        bar_plot = make_bar(palette[i], category, summed)
+        bar_plot = make_bar(palette[i], summed)
         table = make_table(category, summed)
         plots[category + '_bar'] = bar_plot
         plots[category + '_table'] = table
