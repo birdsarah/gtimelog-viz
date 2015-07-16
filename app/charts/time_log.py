@@ -2,19 +2,16 @@ import datetime
 
 from bokeh.plotting import figure
 from bokeh.models import (
-    ColumnDataSource, Range1d, FactorRange,
-    HoverTool, PanTool, WheelZoomTool
+    ColumnDataSource,
+    Range1d,
+    FactorRange,
+    HoverTool,
 )
+from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
 
 
 def get_plot(processed, today):
-
-    two_days_ago = today - datetime.timedelta(days=2)
-    one_week_ago = today - datetime.timedelta(weeks=1)
-    #two_week_ago = today - datetime.timedelta(weeks=2)
-    #three_week_ago = today - datetime.timedelta(weeks=3)
-
-    start = two_days_ago
+    start = today - datetime.timedelta(days=2)  # Start the plot two days ago
     end = today
 
     one_week = processed[(processed.timestamp >= start) & (processed.timestamp <= end)]
@@ -31,10 +28,17 @@ def get_plot(processed, today):
     p = figure(
         x_range=Range1d(start=start, end=end),
         y_range=FactorRange(factors=activities),
-        tools='reset', width=600, height=height
+        tools='reset', toolbar_location=None,
+        width=600, height=height,
+        background_fill=COLOR_PRIMARY,
+        border_fill=COLOR_PRIMARY,
+        outline_line_color=None,
     )
+    for axis in [p.xaxis[0], p.yaxis[0]]:
+        axis.major_label_text_color = COLOR_PRIMARY_CONTRAST
+        axis.axis_line_color = COLOR_PRIMARY
+        axis.major_tick_line_color = COLOR_PRIMARY
+
     p.quad(left='start', right='end', top='activity_top', bottom='activity_bottom', source=source)
     p.add_tools(HoverTool(tooltips='@human hrs'))
-    p.add_tools(PanTool(dimensions=['width']))
-    p.add_tools(WheelZoomTool(dimensions=['width']))
     return p

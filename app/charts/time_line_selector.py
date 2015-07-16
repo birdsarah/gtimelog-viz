@@ -14,7 +14,10 @@ from .chart_utils import get_palette
 from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
 
 AXIS_PROPERTIES = dict(
-    major_label_text_color='white',
+    major_label_text_color=COLOR_PRIMARY_CONTRAST,
+    axis_line_color=COLOR_PRIMARY,
+    major_tick_line_color=COLOR_PRIMARY,
+    minor_tick_line_color=COLOR_PRIMARY,
 )
 
 
