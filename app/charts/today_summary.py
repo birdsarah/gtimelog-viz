@@ -2,6 +2,7 @@ import pandas as pd
 
 from bokeh.charts import Bar
 from bokeh.models import (
+    Range1d,
     DataTable,
     ColumnDataSource,
     TableColumn,
@@ -10,18 +11,20 @@ from bokeh.models import (
     GlyphRenderer,
     CategoricalAxis,
     LinearAxis,
+    SingleIntervalTicker,
+    Grid,
 )
 
-from .chart_utils import get_palette
-from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST
+from .chart_utils import get_palette, make_mdl_table
+from .constants import COLOR_PRIMARY, COLOR_PRIMARY_CONTRAST, COLOR_PRIMARY_DARK
 
 
 def make_bar(color, data):
-    plot = Bar(data, width=200, height=200, palette=[color, '#dddddd'], tools='', stacked=True)
+    plot = Bar(data, width=200, height=200, palette=[color, COLOR_PRIMARY_DARK], tools='', stacked=True)
     plot.toolbar_location = None
     plot.outline_line_color = None
     plot.min_border = 5
-    plot.min_border_top = 10
+    plot.y_range = Range1d(0, 10)
 
     # Get chart items
     legend = plot.select({'type': Legend})
@@ -29,6 +32,7 @@ def make_bar(color, data):
     glyphs = plot.select({'type': GlyphRenderer})
     xaxis = plot.select({'type': CategoricalAxis})
     yaxis = plot.select({'type': LinearAxis})
+    ygrid = plot.select({'type': Grid})
 
     # Format chart properties
     plot.toolbar_location = None
@@ -63,11 +67,14 @@ def make_bar(color, data):
     yaxis.major_tick_out = None
     yaxis.major_tick_in = None
     yaxis.axis_line_color = None
+    yaxis.ticker = SingleIntervalTicker(interval=3)
+
+    ygrid.grid_line_color = None
 
     return plot
 
 
-def make_table(category, data):
+def make_table_widget(category, data):
     totalled = pd.concat(
         [
             data,
@@ -87,19 +94,28 @@ def make_table(category, data):
     return table
 
 
+def make_table_pandas(category, data):
+    totalled = pd.concat([
+        data,
+        pd.DataFrame({'human': data.human.sum()}, index=['%s - Total' % category])
+    ])
+    return make_mdl_table(totalled[['human']], header=False)
+
+
 def get_plot(data):
     categories = list(data.parent_activity.unique())
     palette = get_palette(categories)
 
     plots = {}
+    tables = {}
 
     for i, category in enumerate(categories):
         parent_df = data[data.parent_activity == category]
         summed = parent_df.groupby('sub_activity').sum().sort('human', ascending=False)
         summed['from total'] = summed.human.sum() - summed.human
         bar_plot = make_bar(palette[i], summed)
-        table = make_table(category, summed)
+        table = make_table_pandas(category, summed)
         plots[category + '_bar'] = bar_plot
-        plots[category + '_table'] = table
+        tables[category + '_table'] = table
 
-    return categories, plots
+    return categories, plots, tables

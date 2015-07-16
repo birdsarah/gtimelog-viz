@@ -1,5 +1,7 @@
 import pandas as pd
 
+from .chart_utils import make_mdl_table
+
 
 def make_timesheet(one_week, group_by, start, end):
     """
@@ -40,6 +42,4 @@ def get_timesheet(raw, start, end):
 
     joined = pd.concat([parent, individual])[list(individual.columns)].fillna('')
 
-    to_html = lambda df: df.to_html(classes=["mdl-data-table", "mdl-js-data-table"])
-
-    return to_html(joined)
+    return make_mdl_table(joined)

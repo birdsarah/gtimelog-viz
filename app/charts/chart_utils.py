@@ -7,3 +7,10 @@ def get_palette(list_of_categories):
     if hasattr(palettes, 'Spectral%s' % n):
         palette = getattr(palettes, 'Spectral%s' % n)
     return palette
+
+
+def make_mdl_table(df, *args, **kwargs):
+    """
+    Returns html table with mdl classes
+    """
+    return df.to_html(classes=["mdl-data-table", "mdl-js-data-table"], **kwargs)

@@ -35,7 +35,7 @@ def assemble(today):
         'detail_time_line': detail_time_line,
         'time_log': time_log,
     }
-    today_categories, today_plots = today_summary_get_plot(today_df)
+    today_categories, today_plots, today_tables = today_summary_get_plot(today_df)
     plots.update(today_plots)
 
     plot_ids = [plot.ref.get('id') for plot in plots.values()]
@@ -51,6 +51,7 @@ def assemble(today):
         divs=divs,
         plot_ids=plot_ids,
         today_categories=today_categories,
+        today_tables=today_tables,
         one_week_before=one_week_before,
         weekly_timesheet=weekly_timesheet,
     )
