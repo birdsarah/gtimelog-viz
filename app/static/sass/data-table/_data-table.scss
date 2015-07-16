@@ -53,7 +53,8 @@
   }
 
   td, th {
-    padding: 0 $data-table-column-padding 0 $data-table-column-padding;
+    border: $data-table-dividers;
+    padding: $data-table-cell-top $data-table-column-padding;
     text-align: right;
 
     &:first-of-type {
@@ -71,7 +72,6 @@
     height: $data-table-row-height;
     border-top: $data-table-dividers;
     border-bottom: $data-table-dividers;
-    padding-top: $data-table-cell-top;
     box-sizing: border-box;
 
     .mdl-data-table__select {
@@ -88,7 +88,6 @@
     @include typo-body-2();
     height: $data-table-row-height;
     font-size: 12px;
-    padding-bottom: 8px;
     box-sizing: border-box;
 
     .mdl-data-table__select {
