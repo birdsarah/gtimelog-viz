@@ -25,6 +25,9 @@ def get_timesheet(raw, start, end):
     raw = raw[raw.activity != 'start']
     week = raw[(raw.timestamp.dt.date >= start.date()) & (raw.timestamp.dt.date <= end.date())]
 
+    if week.empty:
+        return '<p class="nothing">Nothing to report!</p>'
+
     parent = make_timesheet(week, week.parent_activity, start, end)
 
     individual = make_timesheet(week, week.formatted_activity, start, end)
