@@ -23,13 +23,13 @@ def get_plot(processed, today):
     activities = list(one_week.formatted_activity.unique())
     activities = sorted(activities)
     n = len(activities)
-    height = 75 * n
+    height = 50 * n
 
     p = figure(
         x_range=Range1d(start=start, end=end),
         y_range=FactorRange(factors=activities),
         tools='reset', toolbar_location=None,
-        width=600, height=height,
+        width=400, height=height,
         background_fill=COLOR_PRIMARY,
         border_fill=COLOR_PRIMARY,
         outline_line_color=None,
