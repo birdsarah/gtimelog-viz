@@ -33,6 +33,7 @@
     <script type="text/javascript" src="/static/javascripts/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
       // Get Bokeh script
+      $.ajaxSetup({ cache: true });
       bokehJS = $.getScript("/static/javascripts/bokeh.min.js");
       moment = $.getScript("/static/javascripts/moment.min.js");
     </script>
