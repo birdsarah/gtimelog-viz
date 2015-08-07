@@ -11,16 +11,6 @@ from charts.timesheet_for_selected_week import get_timesheet
 
 from .process_gtimelog import get_work_df, add_processed_columns, get_today
 
-# Monkey patch method called by components so it returns raw js
-# not js wrapped in script tags and Bokeh function.
-def _new_component_pair(all_models, plots, divs):
-    js = embed.PLOT_JS.render(
-        all_models=embed.serialize_json(all_models),
-        plots=plots
-    )
-    return js, divs
-embed._component_pair = _new_component_pair
-
 
 def assemble(today):
 
@@ -39,7 +29,7 @@ def assemble(today):
     plots.update(today_plots)
 
     plot_ids = [plot.ref.get('id') for plot in plots.values()]
-    script, divs = embed.components(plots)
+    script, divs = embed.components(plots, wrap_script=False)
 
     one_week_before = today - datetime.timedelta(days=6)
     weekly_timesheet = get_timesheet(df.copy(), one_week_before, today)
