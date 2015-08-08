@@ -39,7 +39,7 @@ def assemble(today):
     weekly_timesheet = get_timesheet(df.copy(), one_week_before, today)
 
     return render_template(
-        'minimal.html',
+        'main.html',
         today=today,
         script=script,
         divs=divs,

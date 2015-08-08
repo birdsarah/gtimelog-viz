@@ -1,33 +1,29 @@
 {% extends "base.html" %}
 
 {% block main %}
-  <div class="mdl-cell mdl-cell--4-col mdl-grid">
-    <div class="mdl-card mdl-cell--12-col">
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Today Summary</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-        <div id="today_summary" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-      </div>
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
+      <h5>Today - {{ today.strftime("%a, %d %b '%y")}}</h5>
+
+        <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        <span id="progress" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></span>
+        {% for category in today_categories %}
+          {% set cat_bar = [category, 'bar']|join('_') %}
+          {% set cat_table = [category, 'table']|join('_') %}
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
+                  {{ divs[cat_bar] | safe }}
+            </div>
+            <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
+                  {{ today_tables[cat_table] | safe }}
+            </div>
+          </div>
+        {% endfor %}
     </div>
-    <div class="mdl-card mdl-cell--12-col">
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Log</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Mauris sagittis pellentesque lacus eleifend lacinia...
-      </div>
-    </div>
-  </div>
-  <div class="mdl-cell mdl-cell--8-col mdl-grid">
-    <div class="mdl-card mdl-cell--12-col">
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Timesheet view</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
+    <div class="mdl-cell mdl-cell--8-col">
         <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-      </div>
+        <div id="detail_time_line" class""></div>
+      {% include 'timesheet.html' %}
     </div>
   </div>
 {% endblock main %}
