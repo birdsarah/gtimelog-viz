@@ -15,8 +15,8 @@ function resize_plots() {
 
   // Note this doesn't account for desired padding in the container
 
-  {% for plot_id in plot_ids %}
-      bokeh_obj = Bokeh.index["{{ plot_id }}"];
+  {% for plot_dict in plot_dicts.values() %}
+      bokeh_obj = Bokeh.index["{{ plot_dict['modelid']}}"];
       div_id = bokeh_obj.el.id;
       container = $("#" + div_id).parent();
       container_width = container.width();

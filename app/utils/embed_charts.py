@@ -33,7 +33,6 @@ def assemble(today):
     divs = {}
     div_string = '<div class="plotdiv" id="%s"></div>'
     for key, plot_dict in plot_dicts.items():
-        plot_ids.append(plot_dict['modelid'])
         divs[key] = div_string % plot_dict['elementid'][1:]  # Need to remove the preceding #
 
     one_week_before = today - datetime.timedelta(days=6)
@@ -44,7 +43,7 @@ def assemble(today):
         today=today,
         script=script,
         divs=divs,
-        plot_ids=plot_ids,
+        plot_dicts=plot_dicts,
         today_categories=today_categories,
         today_tables=today_tables,
         one_week_before=one_week_before,
