@@ -28,8 +28,13 @@ def assemble(today):
     today_categories, today_plots, today_tables = today_summary_get_plot(today_df)
     plots.update(today_plots)
 
-    plot_ids = [plot.ref.get('id') for plot in plots.values()]
-    script, divs = embed.components(plots, wrap_script=False)
+    script, plot_dicts = embed.components(plots, wrap_script=False, wrap_plot_info=False)
+    plot_ids = []
+    divs = {}
+    div_string = '<div class="plotdiv" id="%s"></div>'
+    for key, plot_dict in plot_dicts.items():
+        plot_ids.append(plot_dict['modelid'])
+        divs[key] = div_string % plot_dict['elementid'][1:]  # Need to remove the preceding #
 
     one_week_before = today - datetime.timedelta(days=6)
     weekly_timesheet = get_timesheet(df.copy(), one_week_before, today)
