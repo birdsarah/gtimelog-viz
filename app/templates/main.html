@@ -16,7 +16,7 @@
           {% set cat_table = [category, 'table']|join('_') %}
           <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
-                <div class="plotdiv" id="{{ plot_dicts[cat_bar][elementid][1:] }}"></div>
+                <div class="plotdiv" id="{{ plot_dicts[cat_bar][elementid] }}"></div>
             </div>
             <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
                   {{ today_tables[cat_table] | safe }}
@@ -44,7 +44,7 @@
 
     function replace_progress() {
       {% for key, plot_dict in plot_dicts.items() %}
-        var div = '<div class="plotdiv" id="{{ plot_dict[elementid][1:] }}"></div>';
+        var div = '<div class="plotdiv" id="{{ plot_dict[elementid] }}"></div>';
         $("#{{ key }}").replaceWith(div);
       {% endfor %}
     }
