@@ -6,7 +6,6 @@
       <h5>Today - {{ today.strftime("%a, %d %b '%y")}}</h5>
 
         <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-        <span id="progress" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></span>
         {% for category in today_categories %}
           {% set cat_bar = [category, 'bar']|join('_') %}
           {% set cat_table = [category, 'table']|join('_') %}
@@ -35,7 +34,6 @@
     {% include 'js/resize_plots.js' %}
 
     function replace_progress() {
-      $("#progress").replaceWith('');
       {% for key in divs.keys() %}
         $("#{{ key }}").replaceWith('{{ divs[key] | safe }}');
       {% endfor %}
