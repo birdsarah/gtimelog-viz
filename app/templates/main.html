@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 
+{% set elementid = 'elementid' %}
+
 {% block main %}
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col">
       <h5>Today - {{ today.strftime("%a, %d %b '%y")}}</h5>
 
+        {# RECENT LOG #}
         <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+
+        {# TODAY ROUND UP #}
         {% for category in today_categories %}
           {% set cat_bar = [category, 'bar']|join('_') %}
           {% set cat_table = [category, 'table']|join('_') %}
           <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
-                  {{ divs[cat_bar] | safe }}
+                <div class="plotdiv" id="{{ plot_dicts[cat_bar][elementid][1:] }}"></div>
             </div>
             <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
                   {{ today_tables[cat_table] | safe }}
@@ -19,10 +24,13 @@
           </div>
         {% endfor %}
     </div>
+
     <div class="mdl-cell mdl-cell--8-col">
+        {# TIMELINE VIEW #}
         <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         <div id="detail_time_line" class""></div>
-      {% include 'timesheet.html' %}
+
+        {% include 'timesheet.html' %}
     </div>
   </div>
 {% endblock main %}
@@ -32,10 +40,12 @@
 
   <script type="text/javascript">
     {% include 'js/resize_plots.js' %}
+    {% include 'js/timesheet.js' %}
 
     function replace_progress() {
-      {% for key in divs.keys() %}
-        $("#{{ key }}").replaceWith('{{ divs[key] | safe }}');
+      {% for key, plot_dict in plot_dicts.items() %}
+        var div = '<div class="plotdiv" id="{{ plot_dict[elementid][1:] }}"></div>';
+        $("#{{ key }}").replaceWith(div);
       {% endfor %}
     }
 
@@ -44,7 +54,6 @@
       replace_progress();
       {{ script|safe }}
       resize_plots();
-      {% include 'js/timesheet.js' %}
     });
   </script>
 

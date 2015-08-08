@@ -29,11 +29,6 @@ def assemble(today):
     plots.update(today_plots)
 
     script, plot_dicts = embed.components(plots, wrap_script=False, wrap_plot_info=False)
-    plot_ids = []
-    divs = {}
-    div_string = '<div class="plotdiv" id="%s"></div>'
-    for key, plot_dict in plot_dicts.items():
-        divs[key] = div_string % plot_dict['elementid'][1:]  # Need to remove the preceding #
 
     one_week_before = today - datetime.timedelta(days=6)
     weekly_timesheet = get_timesheet(df.copy(), one_week_before, today)
@@ -42,7 +37,6 @@ def assemble(today):
         'main.html',
         today=today,
         script=script,
-        divs=divs,
         plot_dicts=plot_dicts,
         today_categories=today_categories,
         today_tables=today_tables,
