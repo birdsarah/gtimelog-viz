@@ -7,7 +7,7 @@ from bokeh.models import (
     LinearAxis, BasicTicker,
     DatetimeAxis, DatetimeTicker, DatetimeTickFormatter,
     PanTool, ResetTool, WheelZoomTool,
-    Grid, Quad, Callback
+    Grid, Quad, CustomJS
 )
 
 from .chart_utils import get_palette
@@ -155,15 +155,14 @@ def get_plot(raw, today):
         var detail_selection_data = detail_selection_source.get('data');
         var detail_start = cb_obj.get('frame').get('x_range').get('start');
         var detail_end = cb_obj.get('frame').get('x_range').get('end');
-        detail_selection_data['start'][1] = detail_end;
-        detail_selection_data['end'][0] = detail_start;
-        detail_selection_source.trigger('change');
-
+        new_detail_selection = {
+            'start': [detail_selection_data['start'][0], detail_end],
+            'end': [detail_start, detail_selection_data['end'][1]]
+        };
+        detail_selection_source.set('data', new_detail_selection);
 
         // Always make sure the week highlight box on detail is visible and centered
-        var week_selection_data = week_selection_source.get('data');
-
-        var x = moment.duration(detail_end - detail_start).asWeeks() / 2.4
+        var x = moment.duration(detail_end - detail_start).asWeeks() / 2.4;
         var start = moment(detail_start);
 
         var week_end = start.add(x, 'weeks').format('x');
@@ -172,15 +171,17 @@ def get_plot(raw, today):
         var week_start = start.add(6, 'days').format('x');
         $("#today").text(start.format('ddd, DD MMM YYYY'));
 
-        week_selection_data['start'] = [week_start];
-        week_selection_data['end'] = [week_end];
-        week_selection_source.trigger('change');
+        new_week_selection = {
+            'start': [week_start, ],
+            'end': [week_end, ]
+        };
+        week_selection_source.set('data', new_week_selection);
 
         var url = '/timesheet/?start=' + newStart;
         $("#timesheet_submit").attr('href', url).addClass("mdl-button--colored");
     """
 
-    detail_xrange_callback = Callback(args={}, code=detail_code)
+    detail_xrange_callback = CustomJS(args={}, code=detail_code)
     detail_xrange_callback.args['detail_selection_source'] = detail_selection_source
     detail_xrange_callback.args['week_selection_source'] = week_selection_source
     detail_plot.x_range.callback = detail_xrange_callback

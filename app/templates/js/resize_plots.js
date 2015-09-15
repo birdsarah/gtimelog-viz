@@ -16,8 +16,7 @@ function resize_plots() {
   // Note this doesn't account for desired padding in the container
 
   {% for plot_dict in plot_dicts.values() %}
-      bokeh_obj = Bokeh.index["{{ plot_dict['modelid']}}"];
-      div_id = bokeh_obj.el.id;
+      div_id = "{{ plot_dict['elementid'] }}";
       container = $("#" + div_id).parent();
       container_width = container.width();
       plot = container.find('.bk-canvas-wrapper');
@@ -29,6 +28,7 @@ function resize_plots() {
       new_height = parseInt(new_width / aspect_ratio);
       new_height = Math.max(new_height, 100);  // We can't set it too small
 
+      bokeh_obj = Bokeh.index["{{ plot_dict['modelid']}}"];
       bokeh_obj.model.set('plot_width', new_width);
       bokeh_obj.model.set('plot_height', new_height);
   {% endfor %}
