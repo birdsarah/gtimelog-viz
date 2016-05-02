@@ -1,6 +1,6 @@
 import pandas as pd
 
-from bokeh.charts import Bar
+from bokeh._legacy_charts import Bar
 from bokeh.models import (
     Range1d,
     DataTable,
