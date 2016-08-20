@@ -4,7 +4,7 @@ Visualizing [gtimelog](https://github.com/gtimelog/gtimelog) logs
 ### Getting started
 
 ```sh
-$ conda install bokeh pandas
+$ conda env create
 $ cd app
 $ ./application.py
 ```

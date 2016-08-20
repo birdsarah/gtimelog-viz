@@ -1,60 +1,10 @@
 {% extends "base.html" %}
 
-{% set elementid = 'elementid' %}
-
 {% block main %}
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--4-col">
-      <h5>Today - {{ today.strftime("%a, %d %b '%y")}}</h5>
-
-        {# RECENT LOG #}
-        <div id="time_log" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-
-        {# TODAY ROUND UP #}
-        {% for category in today_categories %}
-          {% set cat_bar = [category, 'bar']|join('_') %}
-          {% set cat_table = [category, 'table']|join('_') %}
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
-                <div class="plotdiv" id="{{ plot_dicts[cat_bar][elementid] }}"></div>
-            </div>
-            <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
-                  {{ today_tables[cat_table] | safe }}
-            </div>
-          </div>
-        {% endfor %}
+    <div id="timesheet">
+      <h5>
+        <span id="one_week_before">{{ one_week_before.strftime('%a, %d %b %Y') }}</span> - <span id="today">{{ today.strftime('%a, %d %B %Y') }}</span>
+      </h5>
+      {{ weekly_timesheet | safe }}
     </div>
-
-    <div class="mdl-cell mdl-cell--8-col">
-        {# TIMELINE VIEW #}
-        <div id="all_time_line" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-        <div id="detail_time_line" class""></div>
-
-        {% include 'timesheet.html' %}
-    </div>
-  </div>
 {% endblock main %}
-
-
-{% block js %}
-
-  <script type="text/javascript">
-    {% include 'js/resize_plots.js' %}
-    {% include 'js/timesheet.js' %}
-
-    function replace_progress() {
-      {% for key, plot_dict in plot_dicts.items() %}
-        var div = '<div class="plotdiv" id="{{ plot_dict[elementid] }}"></div>';
-        $("#{{ key }}").replaceWith(div);
-      {% endfor %}
-    }
-
-    // Once retrieved bokeh: replace the progress bars, run bokeh script, initial resize of plots
-    bokehJS.done( function () {
-      replace_progress();
-      {{ script|safe }}
-      resize_plots();
-    });
-  </script>
-
-{% endblock js %}

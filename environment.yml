@@ -1,1 +1,4 @@
-name: gtimelog
+name: timelog-viz
+dependencies:
+  - bokeh
+  - pandas

@@ -11,6 +11,9 @@
   font-family: "Material Icons";
   src: url('../fonts/MaterialIcons-Regular.ttf?1436724914') format('truetype');
 }
+#timesheet {
+  margin: 20px;
+}
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
  *

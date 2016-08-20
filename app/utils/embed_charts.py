@@ -2,44 +2,19 @@ import datetime
 
 from flask import render_template
 
-from bokeh import embed
-
-from charts.today_summary import get_plot as today_summary_get_plot
-from charts.time_line_selector import get_plot as time_line_selector_get_plot
-from charts.time_log import get_plot as time_log_get_plot
-from charts.timesheet_for_selected_week import get_timesheet
-
-from .process_gtimelog import get_work_df, add_processed_columns, get_today
+from .timesheet_for_selected_week import get_timesheet
+from .process_gtimelog import get_work_df, add_processed_columns
 
 
 def assemble(today):
-
     work_df = get_work_df()
     df = add_processed_columns(work_df)
-    today_df = get_today(today, df.copy())
-
-    all_time_line, detail_time_line = time_line_selector_get_plot(df.copy(), today)
-    time_log = time_log_get_plot(df.copy(), today)
-    plots = {
-        'all_time_line': all_time_line,
-        'detail_time_line': detail_time_line,
-        'time_log': time_log,
-    }
-    today_categories, today_plots, today_tables = today_summary_get_plot(today_df)
-    plots.update(today_plots)
-
-    script, plot_dicts = embed.components(plots, wrap_script=False, wrap_plot_info=False)
-
     one_week_before = today - datetime.timedelta(days=6)
-    weekly_timesheet = get_timesheet(df.copy(), one_week_before, today)
+    weekly_timesheet = get_timesheet(df, one_week_before, today)
 
     return render_template(
         'main.html',
         today=today,
-        script=script,
-        plot_dicts=plot_dicts,
-        today_categories=today_categories,
-        today_tables=today_tables,
         one_week_before=one_week_before,
         weekly_timesheet=weekly_timesheet,
     )
@@ -49,7 +24,7 @@ def assemble_timesheet(start, end):
     df = add_processed_columns(get_work_df())
     weekly_timesheet = get_timesheet(df, start, end)
     return render_template(
-        'timesheet.html',
+        'main.html',
         today=end,
         one_week_before=start,
         weekly_timesheet=weekly_timesheet
