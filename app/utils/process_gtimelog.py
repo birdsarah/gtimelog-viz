@@ -50,6 +50,9 @@ def add_processed_columns(gt_df, general_activity_name='general'):
     gt_df['human'] = gt_df.delta.dt.seconds / (60 * 60)
     gt_df.human = gt_df.human.round(2)
 
+    # Remove comments
+    gt_df.activity = gt_df.activity.str.split(' #').str[0]
+
     gt_df['parent_activity'] = gt_df.activity.str.split(' - ').str[0]
     gt_df.parent_activity = gt_df.parent_activity.str.capitalize()
 
